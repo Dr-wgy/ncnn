@@ -53,7 +53,7 @@ jobs:
         mkdir build-armeabi-v7a && cd build-armeabi-v7a
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload armeabi-v7a Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -65,7 +65,7 @@ jobs:
         mkdir build-arm64-v8a && cd build-arm64-v8a
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="arm64-v8a" ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload arm64-v8a Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -77,7 +77,7 @@ jobs:
         mkdir build-x86 && cd build-x86
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="x86" ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload x86 Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -89,7 +89,7 @@ jobs:
         mkdir build-x86_64 && cd build-x86_64
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="x86_64" ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload x86_64 Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -101,7 +101,7 @@ jobs:
         mkdir build-riscv64 && cd build-riscv64
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="riscv64" ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload riscv64 Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -113,7 +113,7 @@ jobs:
         mkdir build-armeabi-v7a-shared && cd build-armeabi-v7a-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=ON -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload armeabi-v7a Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -125,7 +125,7 @@ jobs:
         mkdir build-arm64-v8a-shared && cd build-arm64-v8a-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="arm64-v8a" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload arm64-v8a Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -137,7 +137,7 @@ jobs:
         mkdir build-x86-shared && cd build-x86-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="x86" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload x86 Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -149,7 +149,7 @@ jobs:
         mkdir build-x86_64-shared && cd build-x86_64-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="x86_64" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload x86_64 Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -161,7 +161,7 @@ jobs:
         mkdir build-riscv64-shared && cd build-riscv64-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="riscv64" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload riscv64 Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -199,7 +199,7 @@ jobs:
         mkdir build-armeabi-v7a-r16b && cd build-armeabi-v7a-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload armeabi-v7a Static (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -211,7 +211,7 @@ jobs:
         mkdir build-armeabi-v7a-no-neon-r16b && cd build-armeabi-v7a-no-neon-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=OFF ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload armeabi-v7a-no-neon Static (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -223,7 +223,7 @@ jobs:
         mkdir build-arm64-v8a-r16b && cd build-arm64-v8a-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="arm64-v8a" ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload arm64-v8a Static (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -235,7 +235,7 @@ jobs:
         mkdir build-armeabi-v7a-shared-r16b && cd build-armeabi-v7a-shared-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=ON -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload armeabi-v7a Shared (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -247,7 +247,7 @@ jobs:
         mkdir build-armeabi-v7a-no-neon-shared-r16b && cd build-armeabi-v7a-no-neon-shared-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=OFF -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload armeabi-v7a-no-neon Shared (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -259,7 +259,7 @@ jobs:
         mkdir build-arm64-v8a-shared-r16b && cd build-arm64-v8a-shared-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="arm64-v8a" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-        cmake --install .
+        cmake --build . --target install/strip
     - name: Upload arm64-v8a Shared (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:

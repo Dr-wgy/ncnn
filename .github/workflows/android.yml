@@ -41,123 +41,132 @@ jobs:
         -DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON \
         -DCMAKE_INSTALL_PREFIX=install \
         -DCMAKE_BUILD_TYPE=Release \
-        -DNCNN_VULKAN=ON \
+        -DNCNN_VULKAN=ON \ # 所有构建都启用 Vulkan
 
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: true
 
-    - name: armeabi-v7a
+    - name: armeabi-v7a - Static (Vulkan)
       run: |
         mkdir build-armeabi-v7a && cd build-armeabi-v7a
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload armeabi-v7a artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload armeabi-v7a Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: armeabi-v7a-build-output
-        path: build-armeabi-v7a/ # 或者指定更具体的路径，例如 build-armeabi-v7a/install/lib
+        name: ncnn-android-armeabi-v7a-static-vulkan
+        path: build-armeabi-v7a/install/ # <-- 修改为安装路径
 
-    - name: arm64-v8a
+    - name: arm64-v8a - Static (Vulkan)
       run: |
         mkdir build-arm64-v8a && cd build-arm64-v8a
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="arm64-v8a" ..
         cmake --build . -j $(nproc)
-    - name: Upload arm64-v8a artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload arm64-v8a Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: arm64-v8a-build-output
-        path: build-arm64-v8a/
+        name: ncnn-android-arm64-v8a-static-vulkan
+        path: build-arm64-v8a/install/ # <-- 修改为安装路径
 
-    - name: x86
+    - name: x86 - Static (Vulkan)
       run: |
         mkdir build-x86 && cd build-x86
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="x86" ..
         cmake --build . -j $(nproc)
-    - name: Upload x86 artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload x86 Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: x86-build-output
-        path: build-x86/
+        name: ncnn-android-x86-static-vulkan
+        path: build-x86/install/ # <-- 修改为安装路径
 
-    - name: x86_64
+    - name: x86_64 - Static (Vulkan)
       run: |
         mkdir build-x86_64 && cd build-x86_64
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="x86_64" ..
         cmake --build . -j $(nproc)
-    - name: Upload x86_64 artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload x86_64 Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: x86_64-build-output
-        path: build-x86_64/
+        name: ncnn-android-x86_64-static-vulkan
+        path: build-x86_64/install/ # <-- 修改为安装路径
 
-    - name: riscv64
+    - name: riscv64 - Static (Vulkan)
       run: |
         mkdir build-riscv64 && cd build-riscv64
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="riscv64" ..
         cmake --build . -j $(nproc)
-    - name: Upload riscv64 artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload riscv64 Static (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: riscv64-build-output
-        path: build-riscv64/
+        name: ncnn-android-riscv64-static-vulkan
+        path: build-riscv64/install/ # <-- 修改为安装路径
 
-    - name: armeabi-v7a-shared
+    - name: armeabi-v7a - Shared (Vulkan)
       run: |
         mkdir build-armeabi-v7a-shared && cd build-armeabi-v7a-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=ON -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload armeabi-v7a-shared artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload armeabi-v7a Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: armeabi-v7a-shared-build-output
-        path: build-armeabi-v7a-shared/
+        name: ncnn-android-armeabi-v7a-shared-vulkan
+        path: build-armeabi-v7a-shared/install/ # <-- 修改为安装路径
 
-    - name: arm64-v8a-shared
+    - name: arm64-v8a - Shared (Vulkan)
       run: |
         mkdir build-arm64-v8a-shared && cd build-arm64-v8a-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="arm64-v8a" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload arm64-v8a-shared artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload arm64-v8a Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: arm64-v8a-shared-build-output
-        path: build-arm64-v8a-shared/
+        name: ncnn-android-arm64-v8a-shared-vulkan
+        path: build-arm64-v8a-shared/install/ # <-- 修改为安装路径
 
-    - name: x86-shared
+    - name: x86 - Shared (Vulkan)
       run: |
         mkdir build-x86-shared && cd build-x86-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="x86" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload x86-shared artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload x86 Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: x86-shared-build-output
-        path: build-x86-shared/
+        name: ncnn-android-x86-shared-vulkan
+        path: build-x86-shared/install/ # <-- 修改为安装路径
 
-    - name: x86_64-shared
+    - name: x86_64 - Shared (Vulkan)
       run: |
         mkdir build-x86_64-shared && cd build-x86_64-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="x86_64" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload x86_64-shared artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload x86_64 Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: x86_64-shared-build-output
-        path: build-x86_64-shared/
+        name: ncnn-android-x86_64-shared-vulkan
+        path: build-x86_64-shared/install/ # <-- 修改为安装路径
 
-    - name: riscv64-shared
+    - name: riscv64 - Shared (Vulkan)
       run: |
         mkdir build-riscv64-shared && cd build-riscv64-shared
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="riscv64" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload riscv64-shared artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload riscv64 Shared (Vulkan) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: riscv64-shared-build-output
-        path: build-riscv64-shared/
-
+        name: ncnn-android-riscv64-shared-vulkan
+        path: build-riscv64-shared/install/ # <-- 修改为安装路径
 
   ndk-r16b:
     runs-on: ubuntu-latest
@@ -167,14 +176,14 @@ jobs:
         -DANDROID_PLATFORM=android-21 \
         -DCMAKE_INSTALL_PREFIX=install \
         -DCMAKE_BUILD_TYPE=Release \
-        -DNCNN_VULKAN=ON \
+        -DNCNN_VULKAN=ON \ # 所有构建都启用 Vulkan
 
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: true
 
-    - name: ndk-r16b
+    - name: ndk-r16b - Setup
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -185,68 +194,74 @@ jobs:
         wget -q https://dl.google.com/android/repository/android-ndk-r16b-linux-x86_64.zip -O $GITHUB_WORKSPACE/android-ndk-r16b-linux-x86_64.zip
         cd $GITHUB_WORKSPACE && unzip -q android-ndk-r16b-linux-x86_64.zip
 
-    - name: armeabi-v7a
+    - name: armeabi-v7a - Static (Vulkan, NDK r16b)
       run: |
-        mkdir build-armeabi-v7a && cd build-armeabi-v7a
+        mkdir build-armeabi-v7a-r16b && cd build-armeabi-v7a-r16b # 为r16b版本使用不同的构建目录名
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload armeabi-v7a (r16b) artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload armeabi-v7a Static (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: armeabi-v7a-r16b-build-output
-        path: build-armeabi-v7a/
+        name: ncnn-android-armeabi-v7a-static-vulkan-r16b
+        path: build-armeabi-v7a-r16b/install/ # <-- 修改为安装路径
 
-    - name: armeabi-v7a-no-neon
+    - name: armeabi-v7a-no-neon - Static (Vulkan, NDK r16b)
       run: |
-        mkdir build-armeabi-v7a-no-neon && cd build-armeabi-v7a-no-neon
+        mkdir build-armeabi-v7a-no-neon-r16b && cd build-armeabi-v7a-no-neon-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=OFF ..
         cmake --build . -j $(nproc)
-    - name: Upload armeabi-v7a-no-neon (r16b) artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload armeabi-v7a-no-neon Static (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: armeabi-v7a-no-neon-r16b-build-output
-        path: build-armeabi-v7a-no-neon/
+        name: ncnn-android-armeabi-v7a-no-neon-static-vulkan-r16b
+        path: build-armeabi-v7a-no-neon-r16b/install/ # <-- 修改为安装路径
 
-    - name: arm64-v8a
+    - name: arm64-v8a - Static (Vulkan, NDK r16b)
       run: |
-        mkdir build-arm64-v8a && cd build-arm64-v8a
+        mkdir build-arm64-v8a-r16b && cd build-arm64-v8a-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="arm64-v8a" ..
         cmake --build . -j $(nproc)
-    - name: Upload arm64-v8a (r16b) artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload arm64-v8a Static (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: arm64-v8a-r16b-build-output
-        path: build-arm64-v8a/
+        name: ncnn-android-arm64-v8a-static-vulkan-r16b
+        path: build-arm64-v8a-r16b/install/ # <-- 修改为安装路径
 
-    - name: armeabi-v7a-shared
+    - name: armeabi-v7a - Shared (Vulkan, NDK r16b)
       run: |
-        mkdir build-armeabi-v7a-shared && cd build-armeabi-v7a-shared
+        mkdir build-armeabi-v7a-shared-r16b && cd build-armeabi-v7a-shared-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=ON -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload armeabi-v7a-shared (r16b) artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload armeabi-v7a Shared (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: armeabi-v7a-shared-r16b-build-output
-        path: build-armeabi-v7a-shared/
+        name: ncnn-android-armeabi-v7a-shared-vulkan-r16b
+        path: build-armeabi-v7a-shared-r16b/install/ # <-- 修改为安装路径
 
-    - name: armeabi-v7a-no-neon-shared
+    - name: armeabi-v7a-no-neon - Shared (Vulkan, NDK r16b)
       run: |
-        mkdir build-armeabi-v7a-no-neon-shared && cd build-armeabi-v7a-no-neon-shared
+        mkdir build-armeabi-v7a-no-neon-shared-r16b && cd build-armeabi-v7a-no-neon-shared-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="armeabi-v7a" -DANDROID_ARM_NEON=OFF -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload armeabi-v7a-no-neon-shared (r16b) artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload armeabi-v7a-no-neon Shared (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: armeabi-v7a-no-neon-shared-r16b-build-output
-        path: build-armeabi-v7a-no-neon-shared/
+        name: ncnn-android-armeabi-v7a-no-neon-shared-vulkan-r16b
+        path: build-armeabi-v7a-no-neon-shared-r16b/install/ # <-- 修改为安装路径
 
-    - name: arm64-v8a-shared
+    - name: arm64-v8a - Shared (Vulkan, NDK r16b)
       run: |
-        mkdir build-arm64-v8a-shared && cd build-arm64-v8a-shared
+        mkdir build-arm64-v8a-shared-r16b && cd build-arm64-v8a-shared-r16b
         cmake ${{ env.NCNN_CMAKE_OPTIONS }} -DANDROID_ABI="arm64-v8a" -DNCNN_SHARED_LIB=ON ..
         cmake --build . -j $(nproc)
-    - name: Upload arm64-v8a-shared (r16b) artifacts
+        cmake --install . # <-- 添加安装步骤
+    - name: Upload arm64-v8a Shared (Vulkan, NDK r16b) Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: arm64-v8a-shared-r16b-build-output
-        path: build-arm64-v8a-shared/
+        name: ncnn-android-arm64-v8a-shared-vulkan-r16b
+        path: build-arm64-v8a-shared-r16b/install/ # <-- 修改为安装路径
